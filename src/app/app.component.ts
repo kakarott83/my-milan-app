@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  disabledNavbar: boolean = false;
+
   title = 'my-milan';
 }
