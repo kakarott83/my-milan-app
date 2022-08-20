@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h5>Land</h5>
+        </div>
+        <div class="col-1">
+          <h5>{{ myCustomer.id }}</h5>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="myCustomerForm" (ngSubmit)="submit()">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Ort</label>
+            <input type="text" class="form-control" formControlName="city" />
+          </div>
+          <div class="col">
+            <label class="form-label">Land</label>
+            <div class="col">
+              <select
+                class="form-control"
+                formControlName="country"
+                (change)="changeCountry($event)"
+              >
+                <option value="">--Länderliste--</option>
+                <option *ngFor="let country of countryList">
+                  {{ country.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="footer-button">
+          <button
+            type="submit"
+            class="btn btn-primary btn-footer"
+            [disabled]="myCustomerForm.invalid"
+          >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Speichern
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div>
+    {{ myCustomerForm.value | json }}
+  </div>
+</div>

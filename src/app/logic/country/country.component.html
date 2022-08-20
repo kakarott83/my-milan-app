@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h5>Land</h5>
+        </div>
+        <div class="col-1">
+          <h5>{{ myCountry.id }}</h5>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="myCountryForm" (ngSubmit)="submit()">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Tagespauschale</label>
+            <input type="number" class="form-control" formControlName="rate" />
+          </div>
+          <div class="col">
+            <label class="form-label">An-und Abreise</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="halfRate"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="footer-button">
+          <button
+            type="submit"
+            class="btn btn-primary btn-footer"
+            [disabled]="myCountryForm.invalid"
+          >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Speichern
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

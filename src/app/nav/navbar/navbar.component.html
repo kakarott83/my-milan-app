@@ -1,32 +1,52 @@
 <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="../assets/pictures/milan_logo.png" alt="" width="30" height="24">
-                Milan
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="travel-list">Alle Reisen</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="createTravel">Neue Reise</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a routerLink="logout">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="home">
+        <img
+          src="../assets/pictures/milan_logo.png"
+          alt=""
+          width="30"
+          height="24"
+        />
+        Milan
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/home"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/travel-list">Alle Reisen</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/createTravel">Neue Reise</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/country-list">Länder</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/customer-list">Kunden</a>
+          </li>
+        </ul>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button (click)="logout()">
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
 </div>

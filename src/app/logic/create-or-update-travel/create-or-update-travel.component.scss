@@ -1,0 +1,29 @@
+.btn-footer {
+  margin-right: 16px;
+}
+
+.spend-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 31px;
+}
+
+.col-3 {
+  width: 30%;
+}
+
+.spend-button-add {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: flex-start;
+}
+
+.footer-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+option:last-child {
+  font-weight: bold;
+}
