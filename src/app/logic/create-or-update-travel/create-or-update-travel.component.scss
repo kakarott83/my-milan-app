@@ -1,5 +1,52 @@
+.header {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 5%;
+  border-bottom: solid 1px;
+}
+
+.spends-header {
+  border-top: solid 1px;
+  display: flex;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
+.summarySpends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5%;
+}
+
+.lastChild {
+  border-top: solid 1px;
+  font-weight: bold;
+}
+
+.spends-list {
+  padding: 10px;
+}
+
+.first {
+  background-color: green;
+}
+
+.last {
+  border-bottom: solid 1px;
+  color: red;
+}
+
 .btn-footer {
   margin-right: 16px;
+}
+
+.spends-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spends-label {
+  display: flex;
 }
 
 .spend-button {
@@ -17,6 +64,11 @@
   margin-top: 10px;
   margin-bottom: 10px;
   justify-content: flex-start;
+}
+
+.setting-header {
+  border-top: solid 1px;
+  padding-top: 10px;
 }
 
 .footer-button {
