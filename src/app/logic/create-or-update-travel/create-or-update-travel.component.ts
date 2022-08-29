@@ -81,11 +81,11 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     cityNew: ['', Validators.required],
     countryNew: ['', Validators.required],
     reason: ['', Validators.required],
-    isPaid: [''],
-    isSubmitted: [''],
-    hasBreakfast: [''],
-    hasLaunch: [''],
-    hasDinner: [''],
+    isPaid: [false],
+    isSubmitted: [false],
+    hasBreakfast: [false],
+    hasLaunch: [false],
+    hasDinner: [false],
     spends: this.fb.array([]),
   });
 
@@ -149,6 +149,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
         this.myTravel = result;
         console.log(this.myTravel.hasLaunch, 'Load1');
         console.log(this.myTravel.hasLaunch ? 'true' : 'false', 'Load2');
+        console.log(result,'Result');
 
         this.myTravelForm.setValue({
           id: String(this.myTravel.id),
@@ -171,11 +172,11 @@ export class CreateOrUpdateTravelComponent implements OnInit {
           country: this.myTravel.country,
           reason: this.myTravel.reason,
           city: this.myTravel.city,
-          isPaid: this.myTravel.isPaid ? 'true' : 'false',
-          isSubmitted: this.myTravel.isSubmitted ? 'true' : 'false',
-          hasBreakfast: this.myTravel.hasBreakfast ? 'true' : 'false',
-          hasLaunch: this.myTravel.hasLaunch ? 'true' : 'false',
-          hasDinner: this.myTravel.hasDinner ? 'true' : 'false',
+          isPaid: this.myTravel.isPaid ? true : false,
+          isSubmitted: this.myTravel.isSubmitted ? true : false,
+          hasBreakfast: this.myTravel.hasBreakfast ? true : false,
+          hasLaunch: this.myTravel.hasLaunch ? true : false,
+          hasDinner: this.myTravel.hasDinner ? true : false,
           spends: [],
         });
 
@@ -211,7 +212,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
             'HH:mm'
           )
         ),
-        hasBreakfast: 'true',
+        hasBreakfast: false,
       });
       this.myTravel.startDate = start;
       this.myTravel.endDate = end;
