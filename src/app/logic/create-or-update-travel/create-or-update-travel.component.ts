@@ -3,7 +3,13 @@ import { DataService } from 'src/app/services/data.service';
 
 import { DatePipe, formatDate, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+	FormArray,
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Calc } from '../../model/calc';
@@ -103,6 +109,12 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     return this.myTravelForm.controls['spends'] as FormArray;
   }
 
+  set setCheckBox(controlName: string) {
+    if (this.myTravelForm.get('hasDinner')?.value !== undefined) {
+      console.log(this.myTravelForm.get('hasDinner')?.value);
+    }
+  }
+
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -173,7 +185,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
         });
 
         //Flags setzen
-        this.myTravelForm.controls['hasDinner'].setValue('false');
+        console.log(this.myTravelForm.get('isPaid')?.value, 'Checkbox');
       });
     } else {
       console.log(Utils.Utils.middleOfLastWeekFromNow(), 'Test');
