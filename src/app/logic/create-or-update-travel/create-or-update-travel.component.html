@@ -1,52 +1,85 @@
 <app-navbar></app-navbar>
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <div class="row justify-content-between">
-                <div class="col-4">
-                    <h3>Reisekosten</h3>
-                </div>
-                <div class="col-1">
-                    <h3>{{ myTravel.id }}</h3>
-                </div>
-            </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <h3>Reisekosten</h3>
         </div>
-        <form [formGroup]="myTravelForm" (ngSubmit)="submit()" (change)="changeValue()">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-8">
-                        <div class="header">
-                            <h4>Reisedaten</h4>
-                        </div>
-                        <div class="row mb-2">
-                            <!--Start Datum-->
-                            <div class="col">
-                                <label class="form-label">Beginn der Reise</label>
-                                <input class="form-control" type="date" formControlName="startDate" useValueAsDate [value]="myTravel.startDate | date: 'yyyy-MM-dd'" (input)="dateChanged($event, true)" />
-                            </div>
-                            <!--Start Time-->
-                            <div class="col">
-                                <label class="form-label">Uhrzeit</label>
-                                <input class="form-control" type="time" formControlName="startTime" [value]="myTravel.startDate | date: 'HH:mm'" />
-                            </div>
+        <div class="col-1">
+          <h3>{{ myTravel.id }}</h3>
+        </div>
+      </div>
+    </div>
+    <form
+      [formGroup]="myTravelForm"
+      (ngSubmit)="submit()"
+      (change)="changeValue()"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8">
+            <div class="header">
+              <h4>Reisedaten</h4>
+            </div>
+            <div class="row mb-2">
+              <!--Start Datum-->
+              <div class="col">
+                <label class="form-label">Beginn der Reise</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  formControlName="startDate"
+                  useValueAsDate
+                  [value]="myTravel.startDate | date: 'yyyy-MM-dd'"
+                  (input)="dateChanged($event, true)"
+                />
+              </div>
+              <!--Start Time-->
+              <div class="col">
+                <label class="form-label">Uhrzeit</label>
+                <input
+                  class="form-control"
+                  type="time"
+                  formControlName="startTime"
+                  [value]="myTravel.startDate | date: 'HH:mm'"
+                />
+              </div>
 
-                            <!--End Datum-->
-                            <div class="col">
-                                <label class="form-label">Ende der Reise</label>
-                                <input class="form-control" type="date" formControlName="endDate" useValueAsDate [value]="myTravel.endDate | date: 'yyyy-MM-dd'" (input)="dateChanged($event, false)" />
-                            </div>
-                            <!--End Time-->
-                            <div class="col">
-                                <label class="form-label">Uhrzeit</label>
-                                <input class="form-control" type="time" formControlName="endTime" [value]="myTravel.endDate | date: 'HH:mm'" />
-                            </div>
-                        </div>
+              <!--End Datum-->
+              <div class="col">
+                <label class="form-label">Ende der Reise</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  formControlName="endDate"
+                  useValueAsDate
+                  [value]="myTravel.endDate | date: 'yyyy-MM-dd'"
+                  (input)="dateChanged($event, false)"
+                />
+              </div>
+              <!--End Time-->
+              <div class="col">
+                <label class="form-label">Uhrzeit</label>
+                <input
+                  class="form-control"
+                  type="time"
+                  formControlName="endTime"
+                  [value]="myTravel.endDate | date: 'HH:mm'"
+                />
+              </div>
+            </div>
 
-                        <div class="row mb-2">
-                            <!--Customer-->
-                            <div class="col">
-                                <label class="form-label">Kunde</label>
-                                <select class="form-control" (change)="changeCustomer($event)" formControlName="customer" [hidden]="hideNewCustomer">
+            <div class="row mb-2">
+              <!--Customer-->
+              <div class="col">
+                <label class="form-label">Kunde</label>
+                <select
+                  class="form-control"
+                  (change)="changeCustomer($event)"
+                  formControlName="customer"
+                  [hidden]="hideNewCustomer"
+                >
                   <option value="" disabled="disabled">--Kundenliste--</option>
                   <option *ngFor="let customer of customerList">
                     {{ customer.name }}
@@ -55,167 +88,256 @@
                     <strong>Neuer Kunde</strong>
                   </option>
                 </select>
-                                <input class="form-control" formControlName="customerNew" [hidden]="!hideNewCustomer" />
-                            </div>
+                <input
+                  class="form-control"
+                  formControlName="customerNew"
+                  [hidden]="!hideNewCustomer"
+                />
+              </div>
 
-                            <!--City-->
-                            <div class="col">
-                                <label class="form-label">Ort</label>
-                                <input class="form-control" formControlName="city" [hidden]="hideNewCustomer" />
-                                <input class="form-control" formControlName="cityNew" [hidden]="!hideNewCustomer" />
-                            </div>
+              <!--City-->
+              <div class="col">
+                <label class="form-label">Ort</label>
+                <input
+                  class="form-control"
+                  formControlName="city"
+                  [hidden]="hideNewCustomer"
+                />
+                <input
+                  class="form-control"
+                  formControlName="cityNew"
+                  [hidden]="!hideNewCustomer"
+                />
+              </div>
 
-                            <!--Country-->
-                            <div class="col">
-                                <label class="form-label">Land</label>
-                                <input class="form-control" formControlName="country" [hidden]="hideNewCustomer" />
-                                <input class="form-control" formControlName="countryNew" [hidden]="!hideNewCustomer" />
-                            </div>
-                        </div>
+              <!--Country-->
+              <div class="col">
+                <label class="form-label">Land</label>
+                <input
+                  class="form-control"
+                  formControlName="country"
+                  [hidden]="hideNewCustomer"
+                />
+                <input
+                  class="form-control"
+                  formControlName="countryNew"
+                  [hidden]="!hideNewCustomer"
+                />
+              </div>
+            </div>
 
-                        <div class="row mb-4">
-                            <!--Grund-->
-                            <div class="col">
-                                <label class="form-label">Grund</label>
-                                <input class="form-control" formControlName="reason" />
-                            </div>
-                        </div>
+            <div class="row mb-4">
+              <!--Grund-->
+              <div class="col">
+                <label class="form-label">Grund</label>
+                <input class="form-control" formControlName="reason" />
+              </div>
+            </div>
 
-                        <div class="row spends-header">
-                            <div>
-                                <h5>Ausgaben</h5>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-outline-primary" (click)="addSpendButton('Taxi')">
+            <div class="row spends-header">
+              <div>
+                <h5>Ausgaben</h5>
+              </div>
+              <div
+                class="btn-group"
+                role="group"
+                aria-label="Basic outlined example"
+              >
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addSpendButton('Taxi')"
+                >
                   Taxi
                 </button>
-                                <button type="button" class="btn btn-outline-primary" (click)="addSpendButton('Bus/Bahn')">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addSpendButton('Bus/Bahn')"
+                >
                   Bus/Bahn
                 </button>
-                                <button type="button" class="btn btn-outline-primary" (click)="addSpendButton('Auto')">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addSpendButton('Auto')"
+                >
                   Auto
                 </button>
-                                <button type="button" class="btn btn-outline-primary" (click)="addSpendButton('Hotel')">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addSpendButton('Hotel')"
+                >
                   Hotel
                 </button>
-                                <button type="button" class="btn btn-outline-primary" (click)="addSpend()">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="addSpend()"
+                >
                   Sonstiges
                 </button>
-                            </div>
-                        </div>
+              </div>
+            </div>
 
-                        <ng-container formArrayName="spends">
-                            <ng-container *ngFor="
+            <ng-container formArrayName="spends">
+              <ng-container
+                *ngFor="
                   let spend of spends.controls;
                   let i = index;
                   let first = first
-                ">
-                                <div class="row mb-2 spends-list" [formGroupName]="i">
-                                    <!--Type-->
-                                    <div class="col-3">
-                                        <label class="form-label">Art</label>
-                                        <input class="form-control" formControlName="type" />
-                                    </div>
-                                    <!--Betrag-->
-                                    <div class="col-3">
-                                        <label class="form-label">Betrag</label>
-                                        <input class="form-control" type="number" formControlName="value" />
-                                    </div>
-                                    <!--Datum-->
-                                    <div class="col-3">
-                                        <label class="form-label">Datum</label>
-                                        <input class="form-control" type="date" formControlName="spendDate" useValueAsDate />
-                                    </div>
+                "
+              >
+                <div class="row mb-2 spends-list" [formGroupName]="i">
+                  <!--Type-->
+                  <div class="col-3">
+                    <label class="form-label">Art</label>
+                    <input class="form-control" formControlName="type" />
+                  </div>
+                  <!--Betrag-->
+                  <div class="col-3">
+                    <label class="form-label">Betrag</label>
+                    <input
+                      class="form-control"
+                      type="number"
+                      formControlName="value"
+                    />
+                  </div>
+                  <!--Datum-->
+                  <div class="col-3">
+                    <label class="form-label">Datum</label>
+                    <input
+                      class="form-control"
+                      type="date"
+                      formControlName="spendDate"
+                      useValueAsDate
+                    />
+                  </div>
 
-                                    <!--Button entfernen-->
-                                    <div class="col spend-button">
-                                        <button type="button" (click)="deleteSpend(i)" class="btn btn-danger">
+                  <!--Button entfernen-->
+                  <div class="col spend-button">
+                    <button
+                      type="button"
+                      (click)="deleteSpend(i)"
+                      class="btn btn-danger"
+                    >
                       <i class="fa-solid fa-trash"></i>
                     </button>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </ng-container>
-
-                        <div class="row mb-2 setting-header">
-                            <div>
-                                <h5>Einstellung und Status</h5>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="hasBreakfast" />
-                                    <label class="form-label">Frühstück</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="hasLaunch" [checked]="false" />
-                                    <label class="form-label">Mittagessen</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="hasDinner" />
-                                    <label class="form-label">Abendessen</label>
-                                </div>
-                            </div>
-                            <!--Paid Flags-->
-                            <div class="col-6">
-                                <!--Is Paid-->
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="isPaid" />
-                                    <label class="form-label">Bezahlt</label>
-                                </div>
-                                <!--Is Submitted-->
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="isSubmitted" />
-                                    <label class="form-label">Eingereicht</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="header">
-                            <h4>Berechnung</h4>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="summarySpends">
-                                <div>Verpflegungspauschale</div>
-                                <div>{{ rate | currency: "EUR":"symbol":"1.2-3" }}</div>
-                            </div>
-                            <div class="summarySpends">
-                                <div>Ausgaben</div>
-                                <div>{{ spend | currency: "EUR":"symbol":"1.2-3" }}</div>
-                            </div>
-                            <div class="summarySpends lastChild">
-                                <div>Summe</div>
-                                <div>{{ sum | currency: "EUR":"symbol":"1.2-3" }}</div>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-            </div>
+              </ng-container>
+            </ng-container>
 
-            <div class="card-footer">
-                <div class="footer-button">
-                    <button type="button" class="btn btn-secondary btn-footer" [disabled]="myTravelForm.invalid && 0" (click)="back()">
+            <div class="row mb-2 setting-header">
+              <div>
+                <h5>Einstellung und Status</h5>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="hasBreakfast"
+                  />
+                  <label class="form-label">Frühstück</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="hasLaunch"
+                    [checked]="false"
+                  />
+                  <label class="form-label">Mittagessen</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="hasDinner"
+                  />
+                  <label class="form-label">Abendessen</label>
+                </div>
+              </div>
+              <!--Paid Flags-->
+              <div class="col-6">
+                <!--Is Paid-->
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="isPaid"
+                  />
+                  <label class="form-label">Bezahlt</label>
+                </div>
+                <!--Is Submitted-->
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    formControlName="isSubmitted"
+                  />
+                  <label class="form-label">Eingereicht</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="header">
+              <h4>Berechnung</h4>
+            </div>
+            <div class="row mb-2">
+              <div class="summarySpends">
+                <div>Verpflegungspauschale</div>
+                <div>{{ rate | currency: "EUR":"symbol":"1.2-3" }}</div>
+              </div>
+              <div class="summarySpends">
+                <div>Ausgaben</div>
+                <div>{{ spend | currency: "EUR":"symbol":"1.2-3" }}</div>
+              </div>
+              <div class="summarySpends lastChild">
+                <div>Summe</div>
+                <div>{{ sum | currency: "EUR":"symbol":"1.2-3" }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="footer-button">
+          <button
+            type="button"
+            class="btn btn-secondary btn-footer"
+            [disabled]="myTravelForm.invalid && 0"
+            (click)="back()"
+          >
             <i class="fa-solid fa-circle-arrow-left"></i>
             Zurück
           </button>
-                    <button type="submit" class="btn btn-primary btn-footer" [disabled]="myTravelForm.invalid && 0">
+          <button
+            type="submit"
+            class="btn btn-primary btn-footer"
+            [disabled]="myTravelForm.invalid && 0"
+          >
             <i class="fa-solid fa-floppy-disk"></i>
             Speichern
           </button>
-                    <!--button
+          <button
             type="button"
             class="btn btn-secondary btn-footer"
-            (click)="calculation()"
+            (click)="testMethode('BANK-now')"
           >
             <i class="fa-solid fa-circle-arrow-left"></i>
             Test
-          </button-->
-                </div>
-            </div>
-        </form>
-    </div>
-    <div>
-        {{ myTravelForm.value | json }}
-    </div>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div>
+    {{ myTravelForm.value | json }}
+  </div>
 </div>

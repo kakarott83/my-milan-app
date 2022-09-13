@@ -28,6 +28,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
   //versteckt die Inputfelder bei neuen Kunden
   hideNewCustomer = false;
   disableFlag = true;
+
   spendCounter = 0;
   myTestStartDate = new Date(2022, 7, 29, 15);
   myTestEndDate = new Date(2022, 8, 1, 18);
@@ -60,6 +61,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     rate: 0,
     halfRate: 0,
     isPaid: false,
+    payout: 0,
     isSubmitted: false,
     hasBreakfast: true,
     hasLaunch: false,
@@ -82,6 +84,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     countryNew: ['', Validators.required],
     reason: ['', Validators.required],
     isPaid: [false],
+    payout: [0],
     isSubmitted: [false],
     hasBreakfast: [false],
     hasLaunch: [false],
@@ -135,10 +138,12 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     end.setHours(18);
     end.setMinutes(0);
 
+    /*Kundenliste ermitteln*/
     this.dataService.getCustomers().subscribe((result) => {
       this.customerList = result;
     });
 
+    /*Länder ermitteln*/
     this.dataService.getCountries().subscribe((result) => {
       this.countryList = result;
     });
@@ -147,9 +152,12 @@ export class CreateOrUpdateTravelComponent implements OnInit {
       var id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
       this.dataService.getTravelById(id).subscribe((result) => {
         this.myTravel = result;
-        console.log(this.myTravel.hasLaunch, 'Load1');
-        console.log(this.myTravel.hasLaunch ? 'true' : 'false', 'Load2');
-        console.log(result,'Result');
+
+        this.sum = this.myTravel.payout;
+        this.myTravel.spends.forEach((element) => {
+          this.spend += element.value;
+        });
+        this.rate = this.sum - this.spend;
 
         this.myTravelForm.setValue({
           id: String(this.myTravel.id),
@@ -173,6 +181,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
           reason: this.myTravel.reason,
           city: this.myTravel.city,
           isPaid: this.myTravel.isPaid ? true : false,
+          payout: this.myTravel.payout,
           isSubmitted: this.myTravel.isSubmitted ? true : false,
           hasBreakfast: this.myTravel.hasBreakfast ? true : false,
           hasLaunch: this.myTravel.hasLaunch ? true : false,
@@ -184,12 +193,8 @@ export class CreateOrUpdateTravelComponent implements OnInit {
         this.myTravel.spends.forEach((element) => {
           this.addSpend(element);
         });
-
-        //Flags setzen
-        console.log(this.myTravelForm.get('isPaid')?.value, 'Checkbox');
       });
     } else {
-      console.log(Utils.Utils.middleOfLastWeekFromNow(), 'Test');
       this.myTravelForm.patchValue({
         startDate: String(
           this.datePipe.transform(
@@ -229,16 +234,26 @@ export class CreateOrUpdateTravelComponent implements OnInit {
   }
 
   changeValue() {
-    this.setMyTravel();
-    console.log(this.myTravel, 'Change');
-    this.myCalc = this.calcService.calculation(this.myTravel);
-    if (this.myCalc.rate !== undefined) {
-      this.rate = this.myCalc.rate.valueOf();
-      this.sum = this.rate;
-    }
-    if (this.myCalc.spends !== undefined) {
-      this.spend = this.myCalc.spends.valueOf();
-      this.sum = this.sum + this.spend;
+    let countryName = this.myTravelForm.get('country')?.value;
+
+    if (countryName !== '') {
+      console.log(countryName, 'countryName');
+      this.dataService
+        .getCountryByName(countryName?.toString())
+        .subscribe((result) => {
+          console.log(result, 'getCountryByName');
+          this.myCountry = result[0];
+          this.setMyTravel();
+          this.myCalc = this.calcService.calculation(this.myTravel);
+          if (this.myCalc.rate !== undefined) {
+            this.rate = this.myCalc.rate.valueOf();
+            this.sum = this.rate;
+          }
+          if (this.myCalc.spends !== undefined) {
+            this.spend = this.myCalc.spends.valueOf();
+            this.sum = this.sum + this.spend;
+          }
+        });
     }
   }
 
@@ -261,10 +276,11 @@ export class CreateOrUpdateTravelComponent implements OnInit {
   }
 
   setMyTravel() {
-    var start = this.myTravelForm.get('startDate')?.value?.split('-');
-    var end = this.myTravelForm.get('endDate')?.value?.split('-');
-    var startTime = this.myTravelForm.get('startTime')?.value?.split(':');
-    var endTime = this.myTravelForm.get('endTime')?.value?.split(':');
+    let start = this.myTravelForm.get('startDate')?.value?.split('-');
+    let end = this.myTravelForm.get('endDate')?.value?.split('-');
+    let startTime = this.myTravelForm.get('startTime')?.value?.split(':');
+    let endTime = this.myTravelForm.get('endTime')?.value?.split(':');
+
     if (
       start !== undefined &&
       end !== undefined &&
@@ -317,6 +333,10 @@ export class CreateOrUpdateTravelComponent implements OnInit {
       this.myTravel.hasDinner = this.myTravelForm.get('hasDinner')?.value
         ? true
         : false;
+
+      this.myTravel.halfRate = this.myCountry.halfRate;
+      this.myTravel.rate = this.myCountry.rate;
+      this.myTravel.payout = this.sum;
 
       this.myTravel.spends = this.myTravelForm.get('spends')?.value as Spends[];
     }
@@ -392,5 +412,9 @@ export class CreateOrUpdateTravelComponent implements OnInit {
         }
       }
     }
+  }
+
+  testMethode(name: string) {
+    this.dataService.getCustomerByName('BANK-now');
   }
 }

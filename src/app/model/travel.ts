@@ -1,3 +1,4 @@
+import { Customer } from './customer';
 import { Spends } from './spends';
 
 export interface Travel {
@@ -9,6 +10,7 @@ export interface Travel {
   country: string;
   reason: string;
   isPaid: boolean;
+  payout: number;
   isSubmitted: boolean;
   hasBreakfast: boolean;
   hasLaunch: boolean;
@@ -17,4 +19,5 @@ export interface Travel {
   spends: Spends[];
   rate: number;
   halfRate: number;
+  iCustomer?: Customer;
 }

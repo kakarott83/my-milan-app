@@ -1,7 +1,38 @@
+.maxheigt {
+  height: 90vh;
+}
+
+.listFilter {
+  margin: 0;
+}
 .edit {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .loading {
-    height: 100vh;
+  height: 100vh;
+}
+
+.card-btn-end {
+  display: flex;
+  justify-content: end;
+}
+
+.card-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-content {
+  display: flex;
+  margin-top: 40%;
+}
+
+.logo {
+  height: 50px;
+}
+
+.btn-footer {
+  display: flex;
+  justify-content: end;
 }

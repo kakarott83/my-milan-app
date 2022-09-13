@@ -1,51 +1,189 @@
 <app-navbar></app-navbar>
-<div class="container" *ngIf="travels && datesComplete; else loading">
-  <div class="row m-1">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Filter1" />
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Filter2" />
-    </div>
-  </div>
-  <div class="list-group m-2" *ngFor="let travel of travels">
-    <div href="#" class="list-group-item list-group-item-action">
-      <div
-        routerLink="/editTravel/{{ travel.id }}"
-        class="d-flex w-100 justify-content-between edit"
-      >
-        <h5 class="mb-1">
-          {{ travel.startDate | date: "dd.MM.yyyy" }} -
-          {{ travel.endDate | date: "dd.MM.yyyy" }}
-        </h5>
-        <small>{{ travel.id }}</small>
-      </div>
-      <div class="d-flex w-100 justify-content-between">
-        <div class="col-4">
-          <p class="mb-1">{{ travel.customer }}</p>
+<div
+  class="container listFilter"
+  *ngIf="travels && datesComplete; else loading"
+>
+  <div class="row">
+    <div class="col-3">
+      <div class="card m-2 maxheigt">
+        <div class="card-header">Filter</div>
+        <div class="card body">
+          <form [formGroup]="filterForm">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="filterFromUntil">
+                  <label class="form-label">Reise von</label>
+                  <input
+                    class="form-control"
+                    formControlName="filterStart"
+                    type="date"
+                    useValueAsDate
+                    [value]="filterStart | date: 'yyyy-MM-dd'"
+                    (input)="dateChanged($event)"
+                  />
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="filterFromUntil">
+                  <label class="form-label">bis</label>
+                  <input
+                    class="form-control"
+                    formControlName="filterEnd"
+                    type="date"
+                    useValueAsDate
+                    [value]="filterStart | date: 'yyyy-MM-dd'"
+                    (input)="dateChanged($event)"
+                  />
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="filterCustomer">
+                  <label class="form-label">Kunde</label>
+                  <select
+                    class="form-control"
+                    formControlName="customer"
+                    (change)="changeCustomer($event)"
+                  >
+                    <option value="" disabled="disabled">
+                      --Kundenliste--
+                    </option>
+                    <option
+                      *ngFor="let customer of customerList; let i = index"
+                      [ngValue]="customer.name"
+                    >
+                      {{ customer.name }}
+                    </option>
+                  </select>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="filterCountry">
+                  <label class="form-label">Land</label>
+                  <select
+                    class="form-control"
+                    formControlName="country"
+                    (change)="changeCountry($event)"
+                  >
+                    <option value="" disabled="disabled">
+                      --Länderliste--
+                    </option>
+                    <option
+                      *ngFor="let country of countryList; let i = index"
+                      [ngValue]="country.name"
+                    >
+                      {{ country.name }}
+                    </option>
+                  </select>
+                </div>
+              </li>
+            </ul>
+          </form>
         </div>
-        <div class="d-flex w-100 justify-content-end">
-          <div class="col-3">
-            <input
-              class="form-check-input me-1"
-              type="checkbox"
-              [checked]="travel.isSubmitted"
-              disabled
-            />
-            Eingereicht
-          </div>
-          <div class="col-2">
-            <input
-              class="form-check-input me-1"
-              type="checkbox"
-              [checked]="travel.isPaid"
-              disabled
-            />
-            Bezahlt
-          </div>
+        <div class="card-footer btn-footer">
+          <button class="btn btn-warning" (click)="resetFilterList()">
+            Zurücksetzen
+          </button>
         </div>
       </div>
-      <small>{{ travel.reason }}</small>
+    </div>
+    <div class="col-9">
+      <div class="card m-2 maxheigt">
+        <div class="card-header">Reiseübersicht</div>
+        <div class="card-body">
+          <div class="list-group m-2" *ngFor="let travel of filteredTravels">
+            <div href="#" class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-2 card-logo">
+                  <div class="logo-content">
+                    <img class="logo" src="assets/pictures/ail.png" alt="" />
+                    <div>{{ travel.customer }}</div>
+                  </div>
+                </div>
+                <div class="col-10">
+                  <!--Start und Ende-->
+                  <div
+                    routerLink="/editTravel/{{ travel.id }}"
+                    class="d-flex w-100 justify-content-between edit"
+                  >
+                    <h5 class="mb-1">
+                      {{ travel.startDate | date: "dd.MM.yyyy" }} -
+                      {{ travel.endDate | date: "dd.MM.yyyy" }}
+                    </h5>
+                    <h5 class="mb-1">
+                      {{ travel.payout | currency: "EUR":"symbol":"1.2-3" }}
+                    </h5>
+                  </div>
+                  <!--Customer und Country-->
+                  <div class="d-flex w-100 justify-content-between">
+                    <div class="col-4">
+                      <p class="mb-1">
+                        {{ travel.customer }} - {{ travel.country }}
+                      </p>
+                    </div>
+                    <div class="dropdown card-btn-end">
+                      <a
+                        class="btn btn-secondary btn-sm dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Action
+                      </a>
+
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            (click)="setIsSubmitted(travel.id)"
+                            >wurde Eingereicht</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            class="dropdown-item"
+                            (click)="setIsPaid(travel.id)"
+                            >wurde Bezahlt</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!--Reason und State-->
+                  <div class="d-flex w-100 justify-content-between">
+                    <small>{{ travel.reason }}</small>
+                    <div class="d-flex w-100 justify-content-end">
+                      <div class="col-3">
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          [checked]="travel.isSubmitted"
+                          disabled
+                        />
+                        Eingereicht
+                      </div>
+                      <div class="col-2">
+                        <input
+                          class="form-check-input me-1"
+                          type="checkbox"
+                          [checked]="travel.isPaid"
+                          disabled
+                        />
+                        Bezahlt
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer btn-footer">
+          <button class="btn btn-success" (click)="addNewTravel()">
+            Neue Reise
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

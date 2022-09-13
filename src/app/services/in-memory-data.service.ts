@@ -21,6 +21,7 @@ export class InMemoryDataService implements InMemoryDataService {
         country: 'Schweiz',
         reason: 'Vor Betreuung',
         isPaid: true,
+        payout: 45,
         isSubmitted: true,
         hasBreakfast: true,
         hasLaunch: false,
@@ -32,6 +33,13 @@ export class InMemoryDataService implements InMemoryDataService {
           { type: 'Auto', value: 9.5, spendDate: new Date('2022-09-02') },
           { type: 'Hotel', value: 109.5, spendDate: new Date('2022-09-02') },
         ],
+        iCustomer: {
+          id: 1,
+          name: 'BANK-now',
+          city: 'Horgen',
+          country: 'Schweiz',
+          logo: 'bnow.png',
+        },
       },
       {
         id: 2,
@@ -42,6 +50,7 @@ export class InMemoryDataService implements InMemoryDataService {
         country: 'Schweiz',
         reason: 'Vor Betreuung',
         isPaid: true,
+        payout: 144,
         isSubmitted: true,
         hasBreakfast: true,
         hasLaunch: false,
@@ -53,6 +62,13 @@ export class InMemoryDataService implements InMemoryDataService {
           { type: 'Auto', value: 9.5, spendDate: new Date('2022-09-02') },
           { type: 'Hotel', value: 109.5, spendDate: new Date('2022-09-02') },
         ],
+        iCustomer: {
+          id: 1,
+          name: 'BANK-now',
+          city: 'Horgen',
+          country: 'Schweiz',
+          logo: 'bnow.png',
+        },
       },
       {
         id: 3,
@@ -63,6 +79,7 @@ export class InMemoryDataService implements InMemoryDataService {
         country: 'Österreich',
         reason: 'Vor Betreuung',
         isPaid: false,
+        payout: 65,
         isSubmitted: false,
         hasBreakfast: true,
         hasLaunch: false,
@@ -74,6 +91,13 @@ export class InMemoryDataService implements InMemoryDataService {
           { type: 'Auto', value: 9.5, spendDate: new Date('2022-09-02') },
           { type: 'Hotel', value: 109.5, spendDate: new Date('2022-09-02') },
         ],
+        iCustomer: {
+          id: 4,
+          name: 'Oberbank',
+          city: 'Linz',
+          country: 'Österreich',
+          logo: 'ail.png',
+        },
       },
       {
         id: 4,
@@ -84,6 +108,7 @@ export class InMemoryDataService implements InMemoryDataService {
         country: 'Schweiz',
         reason: 'Vor Betreuung',
         isPaid: false,
+        payout: 45.85,
         isSubmitted: true,
         hasBreakfast: true,
         hasLaunch: false,
@@ -95,6 +120,13 @@ export class InMemoryDataService implements InMemoryDataService {
           { type: 'Auto', value: 9.5, spendDate: new Date('2022-09-02') },
           { type: 'Hotel', value: 109.5, spendDate: new Date('2022-09-02') },
         ],
+        iCustomer: {
+          id: 1,
+          name: 'BANK-now',
+          city: 'Horgen',
+          country: 'Schweiz',
+          logo: 'bnow.png',
+        },
       },
       {
         id: 5,
@@ -105,6 +137,7 @@ export class InMemoryDataService implements InMemoryDataService {
         country: 'Österreich',
         reason: 'Livegang',
         isPaid: true,
+        payout: 145.65,
         isSubmitted: true,
         hasBreakfast: true,
         hasLaunch: false,
@@ -116,6 +149,12 @@ export class InMemoryDataService implements InMemoryDataService {
           { type: 'Auto', value: 9.5, spendDate: new Date('2022-09-02') },
           { type: 'Hotel', value: 109.5, spendDate: new Date('2022-09-02') },
         ],
+        iCustomer: {
+          id: 2,
+          name: 'Toyota',
+          city: 'Wien',
+          country: 'Österreich',
+        },
       },
     ];
 
@@ -143,7 +182,7 @@ export class InMemoryDataService implements InMemoryDataService {
     const customers: Customer[] = [
       {
         id: 1,
-        name: 'Bank-Now',
+        name: 'BANK-now',
         city: 'Horgen',
         country: 'Schweiz',
         logo: 'bnow.png',
@@ -159,6 +198,13 @@ export class InMemoryDataService implements InMemoryDataService {
         name: 'AIL',
         city: 'Gründwald',
         country: 'Deutschland',
+        logo: 'ail.png',
+      },
+      {
+        id: 4,
+        name: 'Oberbank',
+        city: 'Linz',
+        country: 'Österreich',
         logo: 'ail.png',
       },
     ];
