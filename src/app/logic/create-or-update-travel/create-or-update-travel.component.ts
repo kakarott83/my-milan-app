@@ -339,6 +339,12 @@ export class CreateOrUpdateTravelComponent implements OnInit {
       this.myTravel.payout = this.sum;
 
       this.myTravel.spends = this.myTravelForm.get('spends')?.value as Spends[];
+
+      this.dataService
+        .getCustomerByName(this.myTravel.customer)
+        .subscribe((x) => {
+          this.myTravel.iCustomer = x;
+        });
     }
   }
 
@@ -415,6 +421,8 @@ export class CreateOrUpdateTravelComponent implements OnInit {
   }
 
   testMethode(name: string) {
-    this.dataService.getCustomerByName('BANK-now');
+    this.dataService.getCustomerByName('BANK-now').subscribe((data) => {
+      console.log(data, 'Response');
+    });
   }
 }

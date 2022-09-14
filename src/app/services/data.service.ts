@@ -73,12 +73,11 @@ export class DataService {
   }
 
   /*ToDo*/
-  getCustomerByName(name: string): void {
+  getCustomerByName(name: string): Observable<Customer> {
     console.log(name, 'GetCustomerByName');
-    this.getCustomers()
-      .pipe
-      //find(x => x.name === name)
-      ();
+    return this.getCustomers().pipe(
+      map((c) => c.find((x) => x.name === name) as Customer)
+    );
   }
 
   createOrUpdateCustomer(customer: Customer): Observable<Customer> {

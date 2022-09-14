@@ -34,6 +34,8 @@ export class TravelListComponent implements OnInit {
     filterEnd: [''],
     customer: [''],
     country: [''],
+    isPaid: [false],
+    isSubmitted: [false],
   });
 
   constructor(
@@ -89,6 +91,12 @@ export class TravelListComponent implements OnInit {
     this.filterList(this.setMyFilter());
   }
 
+  changeState(e: Event) {
+    console.log(this.filterForm.get('isPaid')?.value?.valueOf());
+    console.log(this.filterForm.get('isSubmitted')?.value?.valueOf());
+    this.filterList(this.setMyFilter());
+  }
+
   filterList(filter?: FilterObjekt) {
     console.log(filter, 'filter');
     let dateFrom = moment(new Date(2010, 7, 1));
@@ -107,12 +115,19 @@ export class TravelListComponent implements OnInit {
       let travelEnd = moment(travel.endDate);
       let travelCustomer = filter?.customer;
       let travelCountry = filter?.country;
+      // Wenn Filter gesetzt, dann Flag True sonst Flag von der Travel
+      let isSubmitted =
+        filter?.isSubmitted === true ? true : travel.isSubmitted;
+      // Wenn Filter gesetzt, dann Flag True sonst Flag von der Travel
+      let isPaid = filter?.isPaid === true ? true : travel.isPaid;
 
       return (
         travelStart.isSameOrAfter(dateFrom) &&
         travelEnd.isSameOrBefore(dateUntil) &&
         travel.customer.includes(travelCustomer as string) &&
-        travel.country.includes(travelCountry as string)
+        travel.country.includes(travelCountry as string) &&
+        travel.isSubmitted === isSubmitted &&
+        travel.isPaid === isPaid
       );
     });
 
@@ -135,6 +150,8 @@ export class TravelListComponent implements OnInit {
       end: this.filterForm.get('filterEnd')?.value?.toString(),
       customer: this.filterForm.get('customer')?.value?.toString(),
       country: this.filterForm.get('country')?.value?.toString(),
+      isPaid: this.filterForm.get('isPaid')?.value?.valueOf(),
+      isSubmitted: this.filterForm.get('isSubmitted')?.value?.valueOf(),
     };
   }
 
@@ -177,4 +194,6 @@ export interface FilterObjekt {
   end?: string;
   customer?: string;
   country?: string;
+  isSubmitted?: boolean;
+  isPaid?: boolean;
 }

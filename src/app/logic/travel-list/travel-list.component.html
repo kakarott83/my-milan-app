@@ -76,6 +76,25 @@
                   </select>
                 </div>
               </li>
+              <li class="list-group-item">
+                <input
+                  class="form-check-input me-1"
+                  formControlName="isSubmitted"
+                  (change)="changeState($event)"
+                  type="checkbox"
+                />
+                Eingereicht
+              </li>
+              <li class="list-group-item">
+                <input
+                  class="form-check-input me-1"
+                  formControlName="isPaid"
+                  (change)="changeState($event)"
+                  formControlName="isPaid"
+                  type="checkbox"
+                />
+                Bezahlt
+              </li>
             </ul>
           </form>
         </div>
@@ -93,10 +112,15 @@
           <div class="list-group m-2" *ngFor="let travel of filteredTravels">
             <div href="#" class="list-group-item list-group-item-action">
               <div class="row">
+                <!--Logo-->
                 <div class="col-2 card-logo">
                   <div class="logo-content">
-                    <img class="logo" src="assets/pictures/ail.png" alt="" />
-                    <div>{{ travel.customer }}</div>
+                    <img
+                      *ngIf="travel.iCustomer?.logo; else logo"
+                      class="logo"
+                      [src]="'assets/pictures/' + travel.iCustomer?.logo"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div class="col-10">
@@ -122,7 +146,7 @@
                     </div>
                     <div class="dropdown card-btn-end">
                       <a
-                        class="btn btn-secondary btn-sm dropdown-toggle"
+                        class="btn btn-light btn-sm dropdown-toggle"
                         href="#"
                         role="button"
                         data-bs-toggle="dropdown"
@@ -195,4 +219,8 @@
       </div>
     </div>
   </div>
+</ng-template>
+
+<ng-template #logo>
+  <img src="assets/pictures/milan_logo.png" alt="" class="logo" />
 </ng-template>
