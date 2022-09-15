@@ -15,7 +15,7 @@
 
 .card-btn-end {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .card-logo {
@@ -34,5 +34,9 @@
 
 .btn-footer {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+}
+
+.btn-footer-item {
+  margin-right: 10px;
 }

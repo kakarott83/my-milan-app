@@ -11,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { CsvExportService } from '../../services/csv-export.service';
+
 @Component({
   selector: 'app-travel-list',
   templateUrl: './travel-list.component.html',
@@ -42,7 +44,8 @@ export class TravelListComponent implements OnInit {
     private authService: AuthService,
     private dataService: DataService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private exportService: CsvExportService
   ) {}
 
   ngOnInit(): void {
@@ -186,6 +189,10 @@ export class TravelListComponent implements OnInit {
       this.dataService.createOrUpdateTravel(myTravel).subscribe();
       this.loadTravels();
     });
+  }
+
+  exportCsv() {
+    this.exportService.createCsv(this.filterList);
   }
 }
 

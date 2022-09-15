@@ -203,9 +203,20 @@
           </div>
         </div>
         <div class="card-footer btn-footer">
-          <button class="btn btn-success" (click)="addNewTravel()">
-            Neue Reise
-          </button>
+          <div>
+            <button
+              class="btn btn-success btn-footer-item"
+              (click)="exportCsv()"
+            >
+              Export CSV File
+            </button>
+            <button
+              class="btn btn-success btn-footer-item"
+              (click)="addNewTravel()"
+            >
+              Neue Reise
+            </button>
+          </div>
         </div>
       </div>
     </div>
