@@ -17,4 +17,19 @@ export class Utils {
     date.setMinutes(0);
     return date;
   }
+
+  public static dateCompare(a: Date, b: Date): number {
+    let _a = moment(a);
+    let _b = moment(b);
+
+    if (_a.isBefore(_b)) {
+      return 1;
+    }
+
+    if (_a.isAfter(_b)) {
+      return -1;
+    }
+
+    return 0;
+  }
 }

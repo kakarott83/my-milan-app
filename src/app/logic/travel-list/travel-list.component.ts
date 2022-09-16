@@ -4,6 +4,7 @@ import { debounceTime, map, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Country } from 'src/app/model/country';
 import { Customer } from 'src/app/model/customer';
+import { FilterObject } from 'src/app/model/filterObject';
 import { Travel } from 'src/app/model/travel';
 import { DataService } from 'src/app/services/data.service';
 
@@ -29,15 +30,15 @@ export class TravelListComponent implements OnInit {
   countryList: Country[] = [];
   selectCustomer!: Customer;
   selectCountry!: Country;
-  myFilter: FilterObjekt = {};
+  myFilter: FilterObject = {};
 
   filterForm = this.fb.group({
     filterStart: [''],
     filterEnd: [''],
     customer: [''],
     country: [''],
-    isPaid: [false],
-    isSubmitted: [false],
+    isPaid: [''],
+    isSubmitted: [''],
   });
 
   constructor(
@@ -100,7 +101,7 @@ export class TravelListComponent implements OnInit {
     this.filterList(this.setMyFilter());
   }
 
-  filterList(filter?: FilterObjekt) {
+  filterList(filter?: FilterObject) {
     console.log(filter, 'filter');
     let dateFrom = moment(new Date(2010, 7, 1));
     let dateUntil = moment(new Date(2100, 11, 31));
@@ -147,14 +148,14 @@ export class TravelListComponent implements OnInit {
     });
   }
 
-  setMyFilter(): FilterObjekt {
+  setMyFilter(): FilterObject {
     return {
       start: this.filterForm.get('filterStart')?.value?.toString(),
       end: this.filterForm.get('filterEnd')?.value?.toString(),
       customer: this.filterForm.get('customer')?.value?.toString(),
       country: this.filterForm.get('country')?.value?.toString(),
-      isPaid: this.filterForm.get('isPaid')?.value?.valueOf(),
-      isSubmitted: this.filterForm.get('isSubmitted')?.value?.valueOf(),
+      //isPaid: this.filterForm.get('isPaid')?.value?.toString(),
+      //isSubmitted: this.filterForm.get('isSubmitted')?.value?.toString(),
     };
   }
 
@@ -162,14 +163,19 @@ export class TravelListComponent implements OnInit {
     this.router.navigate(['/createTravel']);
   }
 
-  setIsSubmitted(id: number) {
+  setIsSubmitted(id: number, state?: boolean) {
     console.log(id);
     this.dataService.getTravelById(id).subscribe((data) => {
       let myTravel = data;
-      myTravel.isSubmitted = !myTravel.isSubmitted;
-      /*Wenn nicht eingereicht, dann auch nicht bezahlt*/
-      if (!myTravel.isSubmitted) {
-        myTravel.isPaid = false;
+      /*Wenn Status übergeben wird, dann diese verwenden*/
+      if (state !== undefined) {
+        myTravel.isSubmitted = state;
+      } else {
+        myTravel.isSubmitted = !myTravel.isSubmitted;
+        /*Wenn nicht eingereicht, dann auch nicht bezahlt*/
+        if (!myTravel.isSubmitted) {
+          myTravel.isPaid = false;
+        }
       }
       console.log(myTravel, 'Submit');
       this.dataService.createOrUpdateTravel(myTravel).subscribe();
@@ -192,15 +198,11 @@ export class TravelListComponent implements OnInit {
   }
 
   exportCsv() {
-    this.exportService.createCsv(this.filterList);
-  }
-}
+    this.exportService.createCsv(this.filteredTravels);
 
-export interface FilterObjekt {
-  start?: string;
-  end?: string;
-  customer?: string;
-  country?: string;
-  isSubmitted?: boolean;
-  isPaid?: boolean;
+    /*Selektierte Reise auf eingereicht setzen*/
+    this.filteredTravels.forEach((element) => {
+      this.setIsSubmitted(element.id, true);
+    });
+  }
 }
