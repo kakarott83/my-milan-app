@@ -210,7 +210,8 @@ export class TravelListComponent implements OnInit {
   }
 
   exportCsv() {
-    this.exportService.createCsv(this.filteredTravels);
+    let _csv = this.exportService.createCsv(this.filteredTravels);
+    console.log(_csv, 'CSV');
 
     /*Selektierte Reise auf eingereicht setzen*/
     this.filteredTravels.forEach((element) => {
@@ -219,8 +220,25 @@ export class TravelListComponent implements OnInit {
   }
 
   sendMail() {
+    /*ToDo E-Mail Anhang*/
     console.log('start');
-    this.mailText = 'mailto:ml@abc.com?subject=Reisekosten&body=';
+
+    let myEmail = 'ml2@abc.com';
+    let myFile = 'C:\\Users\\lm280\\Downloads\\Report.csv';
+    let mySubjekt = 'Reisekosten';
+    let myBody = 'hallo';
+    /* for (let index = 0; index < _csv.data.length; index++) {
+      myBody += _csv.data[index].start;
+    } */
+    this.mailText =
+      'mailto:' +
+      myEmail +
+      '?cc=secondemail@example.com&subject=' +
+      mySubjekt +
+      '&body=' +
+      myBody +
+      '&attachment=' +
+      myFile;
     window.location.href = this.mailText;
     console.log('click');
   }

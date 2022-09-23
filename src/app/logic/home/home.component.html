@@ -1,3 +1,48 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
-Home works
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-lg-6 col-xl">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h6 class="text-uppercase text-muted mb-2">
+              Anzahl Reisen letzten 3 Monate
+            </h6>
+            <span>6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h6 class="text-uppercase text-muted mb-2">Ausstehender Betrag</h6>
+            <span>345.85</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h6 class="text-uppercase text-muted mb-2">
+              Kunde der letzten Reise
+            </h6>
+            <div class="cust-button-group">
+              <span>BANK-now</span>
+              <button class="btn btn-success btn-sm btn-dashboard-card">
+                Reise erfassen
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <app-dashboard-column></app-dashboard-column>
+  </div>
+</div>

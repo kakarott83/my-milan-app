@@ -32,4 +32,11 @@ export class Utils {
 
     return 0;
   }
+
+  public static substractMonth(numberOfMonth: number, date = new Date()) {
+    /* vom heutigen Daten den letzten des Monats */
+    date.setMonth(date.getMonth() - numberOfMonth + 1);
+    date.setDate(0);
+    return date;
+  }
 }

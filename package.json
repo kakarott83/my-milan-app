@@ -23,6 +23,8 @@
     "angular-authentication-service": "^1.1.8",
     "bootstrap": "^5.2.0",
     "file-saver": "^2.0.5",
+    "highcharts": "^10.2.1",
+    "highcharts-angular": "^3.0.0",
     "moment": "^2.29.4",
     "ngx-csv": "^0.3.2",
     "npm": "^8.18.0",

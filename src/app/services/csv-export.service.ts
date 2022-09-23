@@ -13,7 +13,7 @@ import { Travel } from '../model/travel';
 export class CsvExportService {
   constructor(private datePipe: DatePipe) {}
 
-  createCsv(input: Travel[]) {
+  createCsv(input: Travel[]): any {
     let outputArray: any[] = [];
 
     let headers = [
@@ -137,7 +137,6 @@ export class CsvExportService {
       headers: headers,
     };
 
-    let test = new ngxCsv(outputArray, 'Report', options);
-    console.log(test, 'CSV2');
+    return new ngxCsv(outputArray, 'Report', options);
   }
 }

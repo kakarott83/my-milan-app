@@ -1,4 +1,5 @@
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +15,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { DashboardColumnComponent } from './charts/dashboard-column/dashboard-column.component';
 import { CountryListComponent } from './logic/country-list/country-list.component';
 import { CountryComponent } from './logic/country/country.component';
 import { CreateOrUpdateTravelComponent } from './logic/create-or-update-travel/create-or-update-travel.component';
@@ -39,6 +41,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     CountryListComponent,
     CustomerListComponent,
     CustomerComponent,
+    DashboardColumnComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ registerLocaleData(localeDe, 'de-DE', localeDeExtra);
     FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HighchartsChartModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   providers: [
