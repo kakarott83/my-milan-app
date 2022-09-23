@@ -3,6 +3,6 @@ export interface FilterObject {
   end?: string;
   customer?: string;
   country?: string;
-  isSubmitted?: boolean;
-  isPaid?: boolean;
+  isSubmitted?: string;
+  isPaid?: string;
 }

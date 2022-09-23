@@ -31,6 +31,9 @@ export class TravelListComponent implements OnInit {
   selectCustomer!: Customer;
   selectCountry!: Country;
   myFilter: FilterObject = {};
+  links: any[] = ['link1.com', 'link2.com', 'link3.com'];
+
+  mailText: string = '';
 
   filterForm = this.fb.group({
     filterStart: [''],
@@ -121,9 +124,18 @@ export class TravelListComponent implements OnInit {
       let travelCountry = filter?.country;
       // Wenn Filter gesetzt, dann Flag True sonst Flag von der Travel
       let isSubmitted =
-        filter?.isSubmitted === true ? true : travel.isSubmitted;
+        filter?.isSubmitted === 'true'
+          ? true
+          : filter?.isSubmitted === 'false'
+          ? false
+          : travel.isSubmitted;
       // Wenn Filter gesetzt, dann Flag True sonst Flag von der Travel
-      let isPaid = filter?.isPaid === true ? true : travel.isPaid;
+      let isPaid =
+        filter?.isPaid === 'true'
+          ? true
+          : filter?.isPaid === 'false'
+          ? false
+          : travel.isPaid;
 
       return (
         travelStart.isSameOrAfter(dateFrom) &&
@@ -154,8 +166,8 @@ export class TravelListComponent implements OnInit {
       end: this.filterForm.get('filterEnd')?.value?.toString(),
       customer: this.filterForm.get('customer')?.value?.toString(),
       country: this.filterForm.get('country')?.value?.toString(),
-      //isPaid: this.filterForm.get('isPaid')?.value?.toString(),
-      //isSubmitted: this.filterForm.get('isSubmitted')?.value?.toString(),
+      isPaid: this.filterForm.get('isPaid')?.value?.toString(),
+      isSubmitted: this.filterForm.get('isSubmitted')?.value?.toString(),
     };
   }
 
@@ -204,5 +216,12 @@ export class TravelListComponent implements OnInit {
     this.filteredTravels.forEach((element) => {
       this.setIsSubmitted(element.id, true);
     });
+  }
+
+  sendMail() {
+    console.log('start');
+    this.mailText = 'mailto:ml@abc.com?subject=Reisekosten&body=';
+    window.location.href = this.mailText;
+    console.log('click');
   }
 }

@@ -77,25 +77,6 @@
                 </div>
               </li>
               <li class="list-group-item">
-                <input
-                  class="form-check-input me-1"
-                  formControlName="isSubmitted"
-                  (change)="changeState($event)"
-                  type="checkbox"
-                />
-                Eingereicht
-              </li>
-              <li class="list-group-item">
-                <input
-                  class="form-check-input me-1"
-                  formControlName="isPaid"
-                  (change)="changeState($event)"
-                  formControlName="isPaid"
-                  type="checkbox"
-                />
-                Bezahlt
-              </li>
-              <li class="list-group-item">
                 <label class="form-label">Eingereicht</label>
                 <div class="option-group">
                   <div class="form-check">
@@ -104,8 +85,8 @@
                       formControlName="isSubmitted"
                       (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      name="isSubmitted"
+                      value="true"
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       Ja
@@ -117,8 +98,8 @@
                       formControlName="isSubmitted"
                       (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
+                      name="isSubmitted"
+                      value="false"
                       checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2">
@@ -128,9 +109,11 @@
                   <div class="form-check">
                     <input
                       class="form-check-input"
+                      formControlName="isSubmitted"
+                      (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
+                      name="isSubmitted"
+                      value=""
                       checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2">
@@ -145,9 +128,11 @@
                   <div class="form-check">
                     <input
                       class="form-check-input"
+                      formControlName="isPaid"
+                      (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
+                      name="isPaid"
+                      value="true"
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       Ja
@@ -156,10 +141,11 @@
                   <div class="form-check">
                     <input
                       class="form-check-input"
+                      formControlName="isPaid"
+                      (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
-                      checked
+                      name="isPaid"
+                      value="false"
                     />
                     <label class="form-check-label" for="flexRadioDefault2">
                       Nein
@@ -168,9 +154,11 @@
                   <div class="form-check">
                     <input
                       class="form-check-input"
+                      formControlName="isPaid"
+                      (change)="changeState($event)"
                       type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
+                      name="isPaid"
+                      value=""
                       checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2">
@@ -288,6 +276,12 @@
         </div>
         <div class="card-footer btn-footer">
           <div>
+            <button
+              class="btn btn-success btn-footer-item"
+              (click)="sendMail()"
+            >
+              E-Mail
+            </button>
             <button
               class="btn btn-success btn-footer-item"
               (click)="exportCsv()"

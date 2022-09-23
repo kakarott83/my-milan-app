@@ -137,6 +137,7 @@ export class CsvExportService {
       headers: headers,
     };
 
-    new ngxCsv(outputArray, 'Report', options);
+    let test = new ngxCsv(outputArray, 'Report', options);
+    console.log(test, 'CSV2');
   }
 }
