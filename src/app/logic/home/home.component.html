@@ -2,6 +2,7 @@
 <router-outlet></router-outlet>
 <div class="container-fluid">
   <div class="row">
+    <!--Anzahl Reise-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-body">
@@ -14,6 +15,7 @@
         </div>
       </div>
     </div>
+    <!--Offener Betrag-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-body">
@@ -24,6 +26,7 @@
         </div>
       </div>
     </div>
+    <!--Letzte Reise-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-body">
@@ -41,8 +44,42 @@
         </div>
       </div>
     </div>
+    <!--Timer-->
+    <div class="col-12 col-lg-6 col-xl">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <h6 class="text-uppercase text-muted mb-2">Datum</h6>
+            <span>{{ time | async }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <app-dashboard-column></app-dashboard-column>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">Auszahlungen der letzten Monate</div>
+        <div class="card-body">
+          <app-dashboard-column></app-dashboard-column>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">Test</div>
+        <div class="card-body">
+          <app-dashboard-line></app-dashboard-line>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">Kunden der letzten Monate</div>
+        <div class="card-body">
+          <app-dashboard-pie></app-dashboard-pie>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
