@@ -39,4 +39,21 @@ export class Utils {
     date.setDate(0);
     return date;
   }
+
+  public static monthList(): string[] {
+    return [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+  }
 }

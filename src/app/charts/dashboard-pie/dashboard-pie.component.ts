@@ -5,6 +5,7 @@ import {
 	ChartOptions,
 	ChartType,
 } from 'chart.js';
+import { ChartService } from 'src/app/services/chart.service';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -14,30 +15,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./dashboard-pie.component.scss'],
 })
 export class DashboardPieComponent implements OnInit {
-  //@ViewChild(BaseChartDirective) chartPie?: BaseChartDirective | undefined;
+  public chart: any;
 
-  chartType: ChartType = 'pie';
+  constructor(private chartService: ChartService) {}
 
-  data: ChartData<'pie'> = {
-    labels: ['AIL', 'BANK-now', 'Oberbank', 'Toyota'],
-    datasets: [
-      {
-        label: 'something',
-        data: [4, 3, 1, 3],
-      },
-    ],
-  };
-
-  options: ChartOptions<'pie'> = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-    maintainAspectRatio: false,
-  };
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chart = this.chartService.createPieChart('pieChart');
+  }
 }

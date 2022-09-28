@@ -1,2 +1,11 @@
-<p>logout works!</p>
-<a routerLink="/login">Zurück zum Login</a>
+<div fxLayoutAlign="center center" class="background">
+  <div class="card">
+    <div class="card-header">Logout</div>
+    <div class="card-body">
+      <span>Du wurdest erfolgreich ausgeloggt</span>
+    </div>
+    <div class="card-footer">
+      <button (click)="login()" class="btn btn-primary">Zurück zu Login</button>
+    </div>
+  </div>
+</div>

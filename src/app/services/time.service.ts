@@ -18,6 +18,6 @@ export class TimeService {
   private getDateTime() {
     this.date.setSeconds(this.date.getSeconds() + 1);
     moment.locale('de');
-    return moment(this.date).format('dddd, Do MMMM YYYY, h:mm:ss');
+    return moment(this.date).format('dddd, Do MMMM YYYY, HH:mm:ss');
   }
 }

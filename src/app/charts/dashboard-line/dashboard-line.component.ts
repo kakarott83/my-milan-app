@@ -2,36 +2,22 @@ import { ChartData, ChartOptions, ChartType } from 'chart.js';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { ChartService } from '../../services/chart.service';
+
 @Component({
   selector: 'app-dashboard-line',
   templateUrl: './dashboard-line.component.html',
   styleUrls: ['./dashboard-line.component.scss'],
 })
 export class DashboardLineComponent implements OnInit {
+  chart: any;
   //@ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   chartType: ChartType = 'line';
 
-  data: ChartData<'line'> = {
-    labels: ['one', 'two', 'three'],
-    datasets: [
-      {
-        label: 'data 1',
-        data: [1, 2, 2],
-      },
-    ],
-  };
+  constructor(private chartService: ChartService) {}
 
-  options: ChartOptions<'line'> = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-    maintainAspectRatio: false,
-  };
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chart = this.chartService.createLineChart('lineChart');
+  }
 }

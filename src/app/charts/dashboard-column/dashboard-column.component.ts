@@ -16,8 +16,7 @@ export class DashboardColumnComponent implements OnInit, AfterViewInit {
   constructor(private chartService: ChartService) {}
 
   ngOnInit(): void {
-    this.chart = this.chartService.createChart('BarChart');
-    console.log(this.chart, 'Chart');
+    this.chart = this.chartService.createColumnChart('BarChart');
   }
 
   ngAfterViewInit() {}

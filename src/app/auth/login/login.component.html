@@ -1,29 +1,54 @@
-<div fxLayoutAlign="center center" class="background">
-    <div class="container w-25 m-auto p-6">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-center">
-                        <img class="d-flex justify-content-end m-1" src="../../../assets/pictures/milan_logo.png" alt=""
-                            width="75" height="75">
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="p-2">
-                        <label>E-Mail Adresse</label>
-                        <input class="form-control" type="text" formControlName="email">
-                    </div>
-                    <div class="p-2">
-                        <label>Passwort</label>
-                        <input class="form-control" type="text" formControlName="password">
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="p-2">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </div>
+<div class="background">
+  <div fxLayoutAlign="center center">
+    <div class="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-center">
+              <img
+                class="d-flex justify-content-end m-1"
+                src="../../../assets/pictures/milan_logo.png"
+                alt=""
+                width="75"
+                height="75"
+              />
             </div>
-        </form>
+          </div>
+          <div class="card-body">
+            <div class="p-2">
+              <div class="input-group mb-3">
+                <span class="input-group-text">
+                  <i class="fa-solid fa-user"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="email"
+                  placeholder="E-Mail Adresse"
+                />
+              </div>
+            </div>
+            <div class="p-2">
+              <div class="input-group mb-3">
+                <span class="input-group-text">
+                  <i class="fa-sharp fa-solid fa-key"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="text"
+                  formControlName="password"
+                  placeholder="Passwort"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="p-2">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

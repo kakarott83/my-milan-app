@@ -1,4 +1,22 @@
+body,
+html {
+  margin: 0;
+  height: 100%;
+}
 .background {
-    height: 100vh;
-    background-color: rgb(224, 221, 221);
+  background: black url("/assets/pictures/background_login_full.png");
+  //background-image: url("https://www.w3docs.com/uploads/media/default/0001/01/477719675fecaac0362957c214fb9aa56fca99b5.jpeg");
+  //background-color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  width: 350px;
 }

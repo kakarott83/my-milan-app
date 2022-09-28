@@ -2,26 +2,35 @@
 <router-outlet></router-outlet>
 <div class="container-fluid">
   <div class="row">
+    <div class="header">
+      <h4>Hallo {{ name }}</h4>
+    </div>
+  </div>
+  <div class="row">
     <!--Anzahl Reise-->
-    <div class="col-12 col-lg-6 col-xl">
+    <!--div class="col-12 col-lg-6 col-xl">
       <div class="card">
+        <div class="card-header">
+          <h6 class="text-uppercase text-muted mb-2">Anzahl Reisen</h6>
+        </div>
         <div class="card-body">
           <div class="row">
-            <h6 class="text-uppercase text-muted mb-2">
-              Anzahl Reisen letzten 3 Monate
-            </h6>
             <span>6</span>
           </div>
         </div>
       </div>
-    </div>
+    </div-->
     <!--Offener Betrag-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
+        <div class="card-header">
+          <h6 class="text-uppercase text-muted mb-2">Ausstehender Betrag</h6>
+        </div>
         <div class="card-body">
           <div class="row">
-            <h6 class="text-uppercase text-muted mb-2">Ausstehender Betrag</h6>
-            <span>345.85</span>
+            <span
+              ><b>{{ openPayOut | currency: "EUR":"symbol":"1.2-3" }}</b></span
+            >
           </div>
         </div>
       </div>
@@ -29,13 +38,17 @@
     <!--Letzte Reise-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
+        <div class="card-header">
+          <h6 class="text-uppercase text-muted mb-2">
+            Kunde der letzten Reise
+          </h6>
+        </div>
         <div class="card-body">
           <div class="row">
-            <h6 class="text-uppercase text-muted mb-2">
-              Kunde der letzten Reise
-            </h6>
             <div class="cust-button-group">
-              <span>BANK-now</span>
+              <span
+                ><b>{{ customer }}</b></span
+              >
               <button class="btn btn-success btn-sm btn-dashboard-card">
                 Reise erfassen
               </button>
@@ -47,10 +60,14 @@
     <!--Timer-->
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
+        <div class="card-header">
+          <h6 class="text-uppercase text-muted mb-2">Datum</h6>
+        </div>
         <div class="card-body">
           <div class="row">
-            <h6 class="text-uppercase text-muted mb-2">Datum</h6>
-            <span>{{ time | async }}</span>
+            <span
+              ><b>{{ time | async }}</b></span
+            >
           </div>
         </div>
       </div>
@@ -59,7 +76,7 @@
   <div class="row">
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Auszahlungen der letzten Monate</div>
+        <div class="card-header">Anzahl Reisen {{ year }} pro Monat</div>
         <div class="card-body">
           <app-dashboard-column></app-dashboard-column>
         </div>
@@ -67,7 +84,7 @@
     </div>
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Test</div>
+        <div class="card-header">Auszahlungen Reise {{ year }} pro Monat</div>
         <div class="card-body">
           <app-dashboard-line></app-dashboard-line>
         </div>
@@ -75,7 +92,7 @@
     </div>
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Kunden der letzten Monate</div>
+        <div class="card-header">Anzahl Kunden {{ year }}</div>
         <div class="card-body">
           <app-dashboard-pie></app-dashboard-pie>
         </div>
