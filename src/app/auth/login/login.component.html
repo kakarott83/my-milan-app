@@ -18,7 +18,7 @@
             <div class="p-2">
               <div class="input-group mb-3">
                 <span class="input-group-text">
-                  <i class="fa-solid fa-user"></i>
+                  <i class="fa-sharp fa-solid fa-at"></i>
                 </span>
                 <input
                   class="form-control"
@@ -29,23 +29,49 @@
               </div>
             </div>
             <div class="p-2">
-              <div class="input-group mb-3">
-                <span class="input-group-text">
-                  <i class="fa-sharp fa-solid fa-key"></i>
-                </span>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="password"
-                  placeholder="Passwort"
-                />
+              <div>
+                <div class="input-group mb-3 password-group">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-lock"></i>
+                  </span>
+                  <input
+                    class="form-control"
+                    type="password"
+                    formControlName="password"
+                    placeholder="Passwort"
+                  />
+                </div>
+                <div class="forgot-password">
+                  <small>
+                    <a routerLink="/forgot-password"> Passwort vergessen? </a>
+                  </small>
+                </div>
               </div>
+              <span class="error text-danger">{{ error }}</span>
             </div>
           </div>
           <div class="card-footer">
             <div class="p-2">
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-success btn-block">
+                Login
+              </button>
             </div>
+            <div class="login-or">
+              <h6>OR</h6>
+            </div>
+            <div class="p-2 login-google">
+              <button
+                type="button"
+                (click)="loginWithGoogle()"
+                class="login-with-google-btn"
+              >
+                Login with Google
+              </button>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="p-2">
+            <a routerLink="/register"> Neuen Account anlegen </a>
           </div>
         </div>
       </form>

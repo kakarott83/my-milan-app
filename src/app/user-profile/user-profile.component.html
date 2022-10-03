@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="header">
+        <img class="profile" src="assets/pictures/profil.png" alt="" />
+      </div>
+    </div>
+    <div class="card-body">
+      <form class="form" [formGroup]="myUserProfile">
+        <div class="row">
+          <div class="col-12">
+            <label for="">Name</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+          <div class="col-12">
+            <label for="">E-Mail</label>
+            <input type="text" class="form-control" formControlName="eMail" />
+          </div>
+          <div class="col-12">
+            <label for="">Angemeldet seit</label>
+            <input type="text" class="form-control" formControlName="since" />
+          </div>
+          <div class="col-12">
+            <label for="">Letzter Login</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastLogin"
+            />
+          </div>
+          <div class="col-12">
+            <label for="">Rolle</label>
+            <input type="text" class="form-control" formControlName="role" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <button
+        class="btn btn-success"
+        (click)="updateUser()"
+        [disabled]="myUserProfile.invalid"
+      >
+        Speichern
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+body,
+html {
+  margin: 0;
+  height: 100%;
+}
+.background {
+  background: black url("/assets/pictures/background_login_full.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  width: 350px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.password-group {
+  margin-bottom: 1rem !important;
+}
+
+.forgot-password {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-or {
+  display: flex;
+  justify-content: center;
+  h6:before,
+  h6:after {
+    content: "\00a0\00a0\00a0\00a0";
+    text-decoration: line-through;
+    margin: auto 0.5em;
+  }
+}
+
+.login-google {
+  display: flex;
+  justify-content: center;
+}

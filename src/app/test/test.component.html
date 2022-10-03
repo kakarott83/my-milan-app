@@ -1,0 +1,24 @@
+<h4>Firestore Collection</h4>
+<form [formGroup]="myTestForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Text</label>
+          <input type="text" class="form-control" formControlName="text" />
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary btn-footer">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Speichern
+      </button>
+    </div>
+  </div>
+</form>
+<ul>
+  <li *ngFor="let item of items | async">
+    {{ item.name }}
+  </li>
+</ul>

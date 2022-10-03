@@ -1,20 +1,28 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { updateProfile } from 'firebase/auth';
+import { limit, orderBy, query, where } from 'firebase/firestore';
 import { debounceTime, filter, map, Observable } from 'rxjs';
 import { find, single, switchMap, take } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+	AngularFirestore,
+	AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
 
 import { Country } from '../model/country';
 import { Customer } from '../model/customer';
 import { Travel } from '../model/travel';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private afs: AngularFirestore) {}
 
+  userList!: Observable<any[]>;
   baseUrl: string = '/api';
 
   myCountryList: Country[] = [];
@@ -89,5 +97,25 @@ export class DataService {
 
   deleteCustomer(id: number): Observable<Customer> {
     return this.httpClient.delete<Customer>(this.baseUrl + '/customers/' + id);
+  }
+
+  getUserById(id: string) {
+    return this.afs
+      .collection<User>('users', (ref) => ref.where('uid', '==', id).limit(1))
+      .valueChanges();
+  }
+
+  updateUser(user: User) {
+    console.log(user, 'Service');
+    return this.afs.collection<User>('users').doc(user.uid).update(user);
+  }
+
+  insertUser(user: User) {
+    this.afs.collection<User>('appUsers').add(user);
+  }
+
+  getUsers() {
+    this.userList = this.afs.collection<User>('users').valueChanges();
+    return this.userList;
   }
 }

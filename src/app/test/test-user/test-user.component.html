@@ -1,0 +1,8 @@
+<p>test-user works!</p>
+<button (click)="getCurrentUserData()">Fetch User</button>
+<div *ngIf="isAuthentificated">Authentifiziert</div>
+<div>Current User {{ currentUser | json }}</div>
+<div>Id {{ currentUser.uid }}</div>
+<input type="text" [(ngModel)]="displayName" />
+<button (click)="updateDisplayName()">UpdateUser</button>
+<button (click)="getUser()">GetUser</button>
