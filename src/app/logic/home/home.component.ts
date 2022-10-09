@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,19 +14,24 @@ import { TimeService } from '../../services/time.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  name = 'Michael Lange';
+  name!: Observable<any>;
   time!: Observable<any>;
   year = new Date().getFullYear();
   travels: Travel[] = [];
   customer: string = '';
   openPayOut = 0;
+  userName: any;
 
   constructor(
     private router: Router,
     private timeService: TimeService,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthService
   ) {
     this.time = timeService.getDate();
+    this.getName()
+      .then((x) => (this.name = x))
+      .catch((err) => (this.name = err));
   }
 
   ngOnInit(): void {
@@ -39,5 +45,10 @@ export class HomeComponent implements OnInit {
         this.openPayOut += +element.payout;
       });
     });
+  }
+
+  async getName(): Promise<any> {
+    let name = await this.authService.userData.displayName;
+    return name;
   }
 }

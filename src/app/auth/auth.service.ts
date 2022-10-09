@@ -120,6 +120,10 @@ export class AuthService {
     return this.veryfied.value;
   }
 
+  get userId(): string {
+    return this.userData;
+  }
+
   async GoogleAuth() {
     const provider = new GoogleAuthProvider();
     return this.AuthLogin(provider).then((res: any) => {

@@ -3,6 +3,7 @@ import { updateProfile } from 'firebase/auth';
 import { limit, orderBy, query, where } from 'firebase/firestore';
 import { debounceTime, filter, map, Observable } from 'rxjs';
 import { find, single, switchMap, take } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -21,10 +22,15 @@ import { User } from '../model/user';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private httpClient: HttpClient, private afs: AngularFirestore) {}
+  constructor(
+    private httpClient: HttpClient,
+    private afs: AngularFirestore,
+    private authService: AuthService
+  ) {}
 
   userList!: Observable<any[]>;
   baseUrl: string = '/api';
+  userId: any;
 
   myCountryList: Country[] = [];
 
@@ -38,8 +44,16 @@ export class DataService {
     return resp;
   }
 
+  getTravelsByUserFs(): Observable<any> {
+    return this.afs.collection<Travel[]>('travels').valueChanges();
+  }
+
   createOrUpdateTravel(travel: Travel): Observable<Travel> {
     return this.httpClient.post<Travel>(this.baseUrl + '/travels/', travel);
+  }
+
+  createOrUpdateTravelFs(travel: Travel): any {
+    return this.afs.collection<Travel>('travels').add(travel);
   }
 
   deleteTravel(id: number): Observable<Travel> {
@@ -138,5 +152,10 @@ export class DataService {
   getUsers() {
     this.userList = this.afs.collection<User>('users').valueChanges();
     return this.userList;
+  }
+
+  async getUserId(): Promise<any> {
+    let id = await this.authService.userData.uid;
+    return id;
   }
 }

@@ -2,8 +2,8 @@
 <router-outlet></router-outlet>
 <div class="container-fluid">
   <div class="row">
-    <div class="header">
-      <h4>Hallo {{ name }}</h4>
+    <div *ngIf="name" class="header">
+      <h2>Hallo {{ name }}</h2>
     </div>
   </div>
   <div class="row">
@@ -24,7 +24,7 @@
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-header">
-          <h6 class="text-uppercase text-muted mb-2">Ausstehender Betrag</h6>
+          <h4 class="text-uppercase text-muted mb-2">Ausstehender Betrag</h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -39,9 +39,9 @@
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-header">
-          <h6 class="text-uppercase text-muted mb-2">
+          <h4 class="text-uppercase text-muted mb-2">
             Kunde der letzten Reise
-          </h6>
+          </h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -61,7 +61,7 @@
     <div class="col-12 col-lg-6 col-xl">
       <div class="card">
         <div class="card-header">
-          <h6 class="text-uppercase text-muted mb-2">Datum</h6>
+          <h4 class="text-uppercase text-muted mb-2">Datum</h4>
         </div>
         <div class="card-body">
           <div class="row">
@@ -76,7 +76,11 @@
   <div class="row">
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Anzahl Reisen {{ year }} pro Monat</div>
+        <div class="card-header">
+          <h4 class="text-uppercase text-muted mb-2">
+            Anzahl Reisen {{ year }} pro Monat
+          </h4>
+        </div>
         <div class="card-body">
           <app-dashboard-column></app-dashboard-column>
         </div>
@@ -84,7 +88,11 @@
     </div>
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Auszahlungen Reise {{ year }} pro Monat</div>
+        <div class="card-header">
+          <h4 class="text-uppercase text-muted mb-2">
+            Auszahlungen Reise {{ year }} pro Monat
+          </h4>
+        </div>
         <div class="card-body">
           <app-dashboard-line></app-dashboard-line>
         </div>
@@ -92,7 +100,11 @@
     </div>
     <div class="col-4">
       <div class="card">
-        <div class="card-header">Anzahl Kunden {{ year }}</div>
+        <div class="card-header">
+          <h4 class="text-uppercase text-muted mb-2">
+            Anzahl Kunden {{ year }}
+          </h4>
+        </div>
         <div class="card-body">
           <app-dashboard-pie></app-dashboard-pie>
         </div>

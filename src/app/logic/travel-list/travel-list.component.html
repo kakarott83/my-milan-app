@@ -1,8 +1,5 @@
 <app-navbar></app-navbar>
-<div
-  class="container listFilter"
-  *ngIf="travels && datesComplete; else loading"
->
+<div class="container listFilter" *ngIf="travels; else loading">
   <div class="row">
     <div class="col-3">
       <div class="card m-2 maxheigt">
@@ -181,91 +178,93 @@
       <div class="card m-2 maxheigt">
         <div class="card-header">Reiseübersicht</div>
         <div class="card-body">
-          <div class="list-group m-2" *ngFor="let travel of filteredTravels">
-            <div href="#" class="list-group-item list-group-item-action">
-              <div class="row">
-                <!--Logo-->
-                <div class="col-2 card-logo">
-                  <div class="logo-content">
-                    <img
-                      *ngIf="travel.iCustomer?.logo; else logo"
-                      class="logo"
-                      [src]="'assets/pictures/' + travel.iCustomer?.logo"
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div class="col-10">
-                  <!--Start und Ende-->
-                  <div
-                    routerLink="/editTravel/{{ travel.id }}"
-                    class="d-flex w-100 justify-content-between edit"
-                  >
-                    <h5 class="mb-1">
-                      {{ travel.startDate | date: "dd.MM.yyyy" }} -
-                      {{ travel.endDate | date: "dd.MM.yyyy" }}
-                    </h5>
-                    <h5 class="mb-1">
-                      {{ travel.payout | currency: "EUR":"symbol":"1.2-3" }}
-                    </h5>
-                  </div>
-                  <!--Customer und Country-->
-                  <div class="d-flex w-100 justify-content-between">
-                    <div class="col-4">
-                      <p class="mb-1">
-                        {{ travel.customer }} - {{ travel.country }}
-                      </p>
-                    </div>
-                    <div class="dropdown card-btn-end">
-                      <a
-                        class="btn btn-light btn-sm dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        Action
-                      </a>
-
-                      <ul class="dropdown-menu">
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            (click)="setIsSubmitted(travel.id)"
-                            >wurde Eingereicht</a
-                          >
-                        </li>
-                        <li>
-                          <a
-                            class="dropdown-item"
-                            (click)="setIsPaid(travel.id)"
-                            >wurde Bezahlt</a
-                          >
-                        </li>
-                      </ul>
+          <div *ngIf="filteredTravels.length > 0; else noRecords">
+            <div class="list-group m-2" *ngFor="let travel of filteredTravels">
+              <div href="#" class="list-group-item list-group-item-action">
+                <div class="row">
+                  <!--Logo-->
+                  <div class="col-2 card-logo">
+                    <div class="logo-content">
+                      <img
+                        *ngIf="travel.iCustomer?.logo; else logo"
+                        class="logo"
+                        [src]="'assets/pictures/' + travel.iCustomer?.logo"
+                        alt=""
+                      />
                     </div>
                   </div>
-                  <!--Reason und State-->
-                  <div class="d-flex w-100 justify-content-between">
-                    <small>{{ travel.reason }}</small>
-                    <div class="d-flex w-100 justify-content-end">
-                      <div class="col-3">
-                        <input
-                          class="form-check-input me-1"
-                          type="checkbox"
-                          [checked]="travel.isSubmitted"
-                          disabled
-                        />
-                        Eingereicht
+                  <div class="col-10">
+                    <!--Start und Ende-->
+                    <div
+                      routerLink="/editTravel/{{ travel.id }}"
+                      class="d-flex w-100 justify-content-between edit"
+                    >
+                      <h5 class="mb-1">
+                        {{ travel.startDate | date: "dd.MM.yyyy" }} -
+                        {{ travel.endDate | date: "dd.MM.yyyy" }}
+                      </h5>
+                      <h5 class="mb-1">
+                        {{ travel.payout | currency: "EUR":"symbol":"1.2-3" }}
+                      </h5>
+                    </div>
+                    <!--Customer und Country-->
+                    <div class="d-flex w-100 justify-content-between">
+                      <div class="col-4">
+                        <p class="mb-1">
+                          {{ travel.customer }} - {{ travel.country }}
+                        </p>
                       </div>
-                      <div class="col-2">
-                        <input
-                          class="form-check-input me-1"
-                          type="checkbox"
-                          [checked]="travel.isPaid"
-                          disabled
-                        />
-                        Bezahlt
+                      <div class="dropdown card-btn-end">
+                        <a
+                          class="btn btn-light btn-sm dropdown-toggle"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Action
+                        </a>
+
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              (click)="setIsSubmitted(travel.id)"
+                              >wurde Eingereicht</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              (click)="setIsPaid(travel.id)"
+                              >wurde Bezahlt</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!--Reason und State-->
+                    <div class="d-flex w-100 justify-content-between">
+                      <small>{{ travel.reason }}</small>
+                      <div class="d-flex w-100 justify-content-end">
+                        <div class="col-3">
+                          <input
+                            class="form-check-input me-1"
+                            type="checkbox"
+                            [checked]="travel.isSubmitted"
+                            disabled
+                          />
+                          Eingereicht
+                        </div>
+                        <div class="col-2">
+                          <input
+                            class="form-check-input me-1"
+                            type="checkbox"
+                            [checked]="travel.isPaid"
+                            disabled
+                          />
+                          Bezahlt
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -309,6 +308,8 @@
     </div>
   </div>
 </ng-template>
+
+<ng-template #noRecords> keine Reisen vorhanden </ng-template>
 
 <ng-template #logo>
   <img src="assets/pictures/milan_logo.png" alt="" class="logo" />

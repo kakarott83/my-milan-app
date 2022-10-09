@@ -1,3 +1,5 @@
+import { AuthSettings } from 'firebase/auth';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Travel } from 'src/app/model/travel';
 import { DataService } from 'src/app/services/data.service';
 
@@ -105,6 +107,8 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     spendDate: new Date(2022, 8, 16),
   };
 
+  userId: any;
+
   customerList: Customer[] = [];
   countryList: Country[] = [];
 
@@ -125,7 +129,8 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private location: Location,
-    private calcService: CalculationService
+    private calcService: CalculationService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +142,9 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     end.setDate(end.getDate() + 3);
     end.setHours(18);
     end.setMinutes(0);
+
+    /*UserId ermitteln*/
+    this.getUserId().then((x) => (this.userId = x));
 
     /*Kundenliste ermitteln*/
     this.dataService.getCustomers().subscribe((result) => {
@@ -262,6 +270,7 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     console.log(this.myTravel, 'Submit');
 
     this.dataService.createOrUpdateTravel(this.myTravel).subscribe();
+    this.dataService.createOrUpdateTravelFs(this.myTravel);
     this.router.navigate(['/travel-list']);
   }
 
@@ -290,14 +299,14 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     ) {
       this.myTravel.startDate = new Date(
         Number(start[0]),
-        Number(start[1]),
+        Number(start[1]) - 1,
         Number(start[2]),
         Number(startTime[0]),
         Number(startTime[1])
       );
       this.myTravel.endDate = new Date(
         Number(end[0]),
-        Number(end[1]),
+        Number(end[1]) - 1,
         Number(end[2]),
         Number(endTime[0]),
         Number(endTime[1])
@@ -339,6 +348,8 @@ export class CreateOrUpdateTravelComponent implements OnInit {
       this.myTravel.payout = this.sum;
 
       this.myTravel.spends = this.myTravelForm.get('spends')?.value as Spends[];
+
+      this.myTravel.user = this.userId;
 
       this.dataService
         .getCustomerByName(this.myTravel.customer)
@@ -424,5 +435,10 @@ export class CreateOrUpdateTravelComponent implements OnInit {
     this.dataService.getCustomerByName('BANK-now').subscribe((data) => {
       console.log(data, 'Response');
     });
+  }
+
+  async getUserId(): Promise<any> {
+    let id = await this.authService.userData.uid;
+    return id;
   }
 }

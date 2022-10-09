@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, map, take } from 'rxjs/operators';
+import { debounceTime, filter, map, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Country } from 'src/app/model/country';
 import { Customer } from 'src/app/model/customer';
@@ -44,29 +44,24 @@ export class TravelListComponent implements OnInit {
     isSubmitted: [''],
   });
 
+  userId: any;
+
   constructor(
     private authService: AuthService,
     private dataService: DataService,
     private fb: FormBuilder,
     private router: Router,
     private exportService: CsvExportService
-  ) {}
+  ) {
+    /*UserId ermitteln*/
+    this.getUserId().then((x) => {
+      console.log(x);
+      this.userId = x;
+      this.loadTravels();
+    });
+  }
 
   ngOnInit(): void {
-    /*this.authService.isLoggedIn.subscribe(x => {
-      this.isLoggedIn = x;
-      console.log(this.isLoggedIn, 'LoggedIn');
-    })
-    */
-
-    this.loadTravels();
-
-    this.dataService.getTravelsByUser().subscribe((travels) => {
-      this.travels = travels;
-      this.filteredTravels = travels;
-      this.datesComplete = true;
-    });
-
     this.dataService.getCustomers().subscribe((customers) => {
       this.customerList = customers;
     });
@@ -76,12 +71,39 @@ export class TravelListComponent implements OnInit {
     });
   }
 
+  async getUserId(): Promise<any> {
+    let data = await this.authService.userData;
+    if (data) {
+      return data.uid;
+    }
+    return null;
+  }
+
   loadTravels() {
-    this.dataService.getTravelsByUser().subscribe((travels) => {
-      this.travels = travels;
-      this.filteredTravels = travels;
-      this.datesComplete = true;
-    });
+    this.dataService
+      .getTravelsByUserFs()
+      .pipe(
+        map((travels: any[]) =>
+          travels.map((travel) => ({
+            ...travel,
+            startDate: travel.startDate.toDate(),
+            endDate: travel.endDate.toDate(),
+          }))
+        )
+      )
+      .pipe(
+        map((travels: any[]) =>
+          travels.filter((f) => {
+            return f.user === this.userId;
+          })
+        )
+      )
+      .subscribe((result) => {
+        this.travels = result;
+        this.filteredTravels = result;
+        this.datesComplete = true;
+        console.log(result, 'Result');
+      });
   }
 
   dateChanged(e: Event) {
