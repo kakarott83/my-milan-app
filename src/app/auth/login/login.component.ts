@@ -38,5 +38,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  loginWithGoogle() {}
+  loginWithGoogle() {
+    this.authService.GoogleAuth();
+  }
 }

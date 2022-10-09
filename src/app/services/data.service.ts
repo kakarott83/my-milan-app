@@ -11,6 +11,7 @@ import {
 	AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 
+import { AppUserData } from '../model/appUserData';
 import { Country } from '../model/country';
 import { Customer } from '../model/customer';
 import { Travel } from '../model/travel';
@@ -110,8 +111,28 @@ export class DataService {
     return this.afs.collection<User>('users').doc(user.uid).update(user);
   }
 
-  insertUser(user: User) {
-    this.afs.collection<User>('appUsers').add(user);
+  createOrUpdateAppUserData(userData: any) {
+    let id;
+    this.afs
+      .collection('appUsers', (ref) => ref.where('uid', '==', userData.uid))
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const data = a.payload.doc.data;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+    /*.subscribe((data) => {
+        const id = data[0].id;
+        if (id) {
+          this.afs.collection<AppUserData>('appUsers').doc(id).update(userData);
+        } else {
+          this.afs.collection<AppUserData>('appUsers').add(userData);
+        }
+      });*/
   }
 
   getUsers() {

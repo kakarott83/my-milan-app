@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth/auth.service';
@@ -13,7 +13,7 @@ import { DataService } from '../services/data.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
   myUserProfile!: FormGroup;
   myUserId = '';
   currentUser: User = {};
@@ -41,7 +41,7 @@ export class UserProfileComponent implements OnInit {
         since: [{ value: user.createdAt, disabled: true }],
         lastLogin: [{ value: user.lastLoginAt, disabled: true }],
         //role: [user.role],
-        role: [{ value: 'Admin', disabled: true }],
+        role: [{ value: 'Admin', disabled: false }],
       });
     } else {
       this.myUserProfile = this.fb.group({
@@ -70,8 +70,21 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  updateUser() {
-    this.currentUser.displayName = this.myUserProfile.get('name')?.value;
+  updateUpdateUser() {
+    const name = this.myUserProfile.get('name')?.value;
+    const role = this.myUserProfile.get('role')?.value;
+    /*Display Update wenn es Änderungen gab*/
+    if (this.currentUser.displayName !== name && name !== '') {
+      this.authService.updateDisplayName(name);
+    }
+
+    const data = { uid: this.currentUser.uid, role: role };
+
+    this.dataService.createOrUpdateAppUserData(data);
+
+    /*UserDaten speichern*/
+
+    /*
     this.dataService
       .updateUser(this.currentUser)
       .then((user) => {
@@ -79,6 +92,13 @@ export class UserProfileComponent implements OnInit {
       })
       .catch((error) => {
         console.log(error, 'User nicht aktualisiert');
-      });
+      });*/
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.myUser.unsubscribe();
+    console.log('OnDestroy');
   }
 }

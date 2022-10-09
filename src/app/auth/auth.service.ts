@@ -1,6 +1,6 @@
 //import * as auth from 'firebase/auth';
 import { getAuth, GoogleAuthProvider, updateProfile } from 'firebase/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Injectable, NgZone } from '@angular/core';
@@ -20,6 +20,7 @@ import { User } from '../model/user';
 export class AuthService {
   userData: any;
   currentUser: any = {};
+
   private authStatusSub = new BehaviorSubject(this.currentUser);
   currentAuthStatus = this.authStatusSub.asObservable();
   private loggedInUser: Observable<any> | null = null;
@@ -52,18 +53,20 @@ export class AuthService {
     this.authStatusListener();
   }
 
-  authStatusListener() {
+  authStatusListener(): any {
     this.afAuth.onAuthStateChanged((user) => {
       if (user) {
         this.authStatusSub.next(user);
         this.loggedIn.next(true);
         this.veryfied.next(user.emailVerified);
         console.log(user, 'User ist da');
+        this.userData = user;
       } else {
         this.authStatusSub.next(null);
         this.loggedIn.next(false);
         console.log(user, 'User ist nicht da');
       }
+      return null;
     });
   }
 
@@ -117,7 +120,7 @@ export class AuthService {
     return this.veryfied.value;
   }
 
-  GoogleAuth() {
+  async GoogleAuth() {
     const provider = new GoogleAuthProvider();
     return this.AuthLogin(provider).then((res: any) => {
       this.router.navigate(['home']);
@@ -148,16 +151,19 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.id}`
     );
-    const userData: AuthUser = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
+    if (user) {
+      const userData: AuthUser = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+      };
+      return userRef.set(userData, {
+        merge: true,
+      });
+    }
+    return null;
   }
 
   updateDisplayName(name: string) {
@@ -177,7 +183,8 @@ export class AuthService {
 
   logout() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
+      this.authStatusSub.closed;
+      //localStorage.removeItem('user');
       this.router.navigate(['login']);
     });
   }

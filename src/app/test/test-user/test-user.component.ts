@@ -1,6 +1,7 @@
 import * as auth from 'firebase/auth';
 import { collection, doc, getFirestore, setDoc } from 'firebase/firestore';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/model/user';
 
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -22,6 +23,8 @@ export class TestUserComponent implements OnInit {
     emailVerified: false,
   };
 
+  appUser: User = {};
+
   displayName: string = '';
   uid: string = '';
   isAuthentificated: any;
@@ -30,7 +33,21 @@ export class TestUserComponent implements OnInit {
     private authService: AuthService,
     private dataService: DataService
   ) {
-    this.getCurrentUserData();
+    authService.currentAuthStatus.subscribe((user) => {
+      if (user) {
+        this.appUser = {
+          uid: user.uid,
+          email: user.email,
+          displayName: this.displayName,
+          emailVerfied: user.emailVerified,
+          role: 'Admin',
+          //createdAt: user.metadata.createdAt,
+          //creationTime: user.metadat.creationTime,
+          //lastLoginAt: user.metadat.lastLoginAt,
+          //lastSignInTime: user.metadat.lastSignInTime,
+        };
+      }
+    });
   }
 
   ngOnInit(): void {}
@@ -39,14 +56,9 @@ export class TestUserComponent implements OnInit {
     this.authService.updateDisplayName(this.displayName);
   }
 
-  getCurrentUserData() {
-    this.authService.currentAuthStatus.subscribe((authStatus) => {
-      this.isAuthentificated = authStatus;
-      this.currentUser = authStatus;
-      this.displayName = this.currentUser.displayName;
-      this.uid = this.currentUser.uid;
-      console.log(this.currentUser.uid, 'Test');
-    });
+  setAppUser() {
+    console.log(this.appUser);
+    //this.dataService.insertAppUser(user);
   }
 
   getUser() {
