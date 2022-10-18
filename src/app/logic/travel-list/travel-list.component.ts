@@ -44,7 +44,7 @@ export class TravelListComponent implements OnInit {
     isSubmitted: [''],
   });
 
-  userId: any;
+  user: any;
 
   constructor(
     private authService: AuthService,
@@ -54,11 +54,7 @@ export class TravelListComponent implements OnInit {
     private exportService: CsvExportService
   ) {
     /*UserId ermitteln*/
-    this.getUserId().then((x) => {
-      console.log(x);
-      this.userId = x;
-      this.loadTravels();
-    });
+    this.user = authService.getUserId();
   }
 
   ngOnInit(): void {
@@ -94,7 +90,7 @@ export class TravelListComponent implements OnInit {
       .pipe(
         map((travels: any[]) =>
           travels.filter((f) => {
-            return f.user === this.userId;
+            return f.user === this.user.uid;
           })
         )
       )

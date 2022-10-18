@@ -22,12 +22,9 @@ export class CountryListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataService
-      .getCountries()
-      .pipe(debounceTime(5000))
-      .subscribe((countries) => {
-        this.countries = countries;
-        this.datesComplete = true;
-      });
+    this.dataService.getCountries().subscribe((countries) => {
+      this.countries = countries;
+      this.datesComplete = true;
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 
 import { Component, OnInit } from '@angular/core';
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   customer: string = '';
   openPayOut = 0;
   userName: any;
+  user: any;
 
   constructor(
     private router: Router,
@@ -29,26 +31,42 @@ export class HomeComponent implements OnInit {
     private authService: AuthService
   ) {
     this.time = timeService.getDate();
-    this.getName()
+    /*this.getName()
       .then((x) => (this.name = x))
-      .catch((err) => (this.name = err));
+      .catch((err) => (this.name = err));*/
+    this.user = authService.getUserId();
+    this.name = this.user.displayName;
   }
 
   ngOnInit(): void {
-    this.dataService.getTravelsByUser().subscribe((data) => {
-      this.travels = data;
-      this.customer = this.travels[this.travels.length - 1].customer;
-      let filteredTravel = this.travels.filter((x) => {
-        return x.isPaid === false && x.isSubmitted == true;
-      });
-      filteredTravel.forEach((element) => {
-        this.openPayOut += +element.payout;
-      });
-    });
-  }
+    this.dataService
+      .getTravelsByUserFs()
+      .pipe(
+        map((travels: any[]) =>
+          travels.map((travel) => ({
+            ...travel,
+            startDate: travel.startDate.toDate(),
+            endDate: travel.endDate.toDate(),
+          }))
+        )
+      )
+      .pipe(
+        map((travels: any[]) =>
+          travels.filter((f) => {
+            return f.user === this.user.uid;
+          })
+        )
+      )
 
-  async getName(): Promise<any> {
-    let name = await this.authService.userData.displayName;
-    return name;
+      .subscribe((data) => {
+        this.travels = data;
+        this.customer = this.travels[this.travels.length - 1].customer;
+        let filteredTravel = this.travels.filter((x) => {
+          return x.isPaid === false && x.isSubmitted == true;
+        });
+        filteredTravel.forEach((element) => {
+          this.openPayOut += +element.payout;
+        });
+      });
   }
 }

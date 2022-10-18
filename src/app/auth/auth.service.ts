@@ -39,7 +39,7 @@ export class AuthService {
     public ngZone: NgZone,
     private router: Router
   ) {
-    /*     this.afAuth.authState.subscribe((user) => {
+    this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
         console.log(this.userData.email, 'Auth');
@@ -48,7 +48,7 @@ export class AuthService {
         localStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
       }
-    }); */
+    });
 
     this.authStatusListener();
   }
@@ -68,6 +68,11 @@ export class AuthService {
       }
       return null;
     });
+  }
+
+  getUserId() {
+    let usr = JSON.parse(localStorage.getItem('user') as string);
+    return usr;
   }
 
   login(email: string, password: string) {
@@ -188,7 +193,7 @@ export class AuthService {
   logout() {
     return this.afAuth.signOut().then(() => {
       this.authStatusSub.closed;
-      //localStorage.removeItem('user');
+      localStorage.removeItem('user');
       this.router.navigate(['login']);
     });
   }

@@ -3,14 +3,14 @@ import { BaseChartDirective } from 'ng2-charts';
 import { Utils } from 'src/app/logic/utils';
 import { ChartService } from 'src/app/services/chart.service';
 
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-column',
   templateUrl: './dashboard-column.component.html',
   styleUrls: ['./dashboard-column.component.scss'],
 })
-export class DashboardColumnComponent implements OnInit, AfterViewInit {
+export class DashboardColumnComponent implements OnInit, OnDestroy {
   public chart: any;
 
   constructor(private chartService: ChartService) {}
@@ -19,5 +19,7 @@ export class DashboardColumnComponent implements OnInit, AfterViewInit {
     this.chart = this.chartService.createColumnChart('BarChart');
   }
 
-  ngAfterViewInit() {}
+  ngOnDestroy(): void {
+    this.chart.destroy();
+  }
 }
